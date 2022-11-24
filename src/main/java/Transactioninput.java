@@ -1,8 +1,8 @@
 public class Transactioninput {
-    public String transactionOutputId;
+    public String transactionoutputId;
     public TransactionOutput UTXO; // Unspend Transaction Output
 
-    public Transactioninput(String transactionOutputId) {
-        this.transactionOutputId = transactionOutputId;
+    public Transactioninput(String transactionoutputId) {
+        this.transactionoutputId = transactionoutputId;
     }
 }
