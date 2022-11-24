@@ -94,7 +94,7 @@ public class NVP_Chain {
             }
 
             //Vòng lặp kiểm tra các giao dịch
-            TransactionOutput tempOutput;
+            Transactionoutput tempOutput;
             for(int t=0; t <currentBlock.transactions.size(); t++) {
                 Transaction currentTransaction = currentBlock.transactions.get(t);
 
