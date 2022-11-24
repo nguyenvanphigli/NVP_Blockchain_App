@@ -8,7 +8,7 @@ import java.util.Map;
 public class NVP_Chain {
 
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
-    public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public static HashMap<String,Transactionoutput> UTXOs = new HashMap<String,Transactionoutput>();
 
     public static int difficulty = 3;
     public static float minimumTransaction = 0.1f;
@@ -31,7 +31,7 @@ public class NVP_Chain {
         genesisTransaction = new Transaction(coinbase.publicKey, walletA.publicKey, 100f, null);
         genesisTransaction.generateSignature(coinbase.privateKey);	 //Gán private key (ký thủ công) vào giao dịch gốc
         genesisTransaction.transactionId = "0"; //Gán ID cho giao dịch gốc
-        genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.reciepient, genesisTransaction.value, genesisTransaction.transactionId)); //Thêm Transactions Output
+        genesisTransaction.outputs.add(new Transactionoutput(genesisTransaction.reciepient, genesisTransaction.value, genesisTransaction.transactionId)); //Thêm Transactions Output
         UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //Lưu giao dịch đầu tiên vào danh sách UTXOs.
 
         System.out.println("Đang tạo và đào khối gốc .... ");
@@ -69,7 +69,7 @@ public class NVP_Chain {
         Block currentBlock;
         Block previousBlock;
         String hashTarget = new String(new char[difficulty]).replace('\0', '0');
-        HashMap<String,TransactionOutput> tempUTXOs = new HashMap<String,TransactionOutput>(); //Tạo một danh sách hoạt động tạm thời của các giao dịch chưa được thực thi tại một trạng thái khối nhất định.
+        HashMap<String,Transactionoutput> tempUTXOs = new HashMap<String,Transactionoutput>(); //Tạo một danh sách hoạt động tạm thời của các giao dịch chưa được thực thi tại một trạng thái khối nhất định.
         tempUTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
 
         //Duyệt chuỗi khối để kiểm tra các mã băm:
@@ -107,8 +107,8 @@ public class NVP_Chain {
                     return false;
                 }
 
-                for(TransactionInput input: currentTransaction.inputs) {
-                    tempOutput = tempUTXOs.get(input.transactionOutputId);
+                for(Transactioninput input: currentTransaction.inputs) {
+                    tempOutput = tempUTXOs.get(input.transactionoutputId);
 
                     if(tempOutput == null) {
                         System.out.println("#Các đầu vào tham chiếu trong giao dịch (" + t + ") bị thiếu!");
@@ -120,10 +120,10 @@ public class NVP_Chain {
                         return false;
                     }
 
-                    tempUTXOs.remove(input.transactionOutputId);
+                    tempUTXOs.remove(input.transactionoutputId);
                 }
 
-                for(TransactionOutput output: currentTransaction.outputs) {
+                for(Transactionoutput output: currentTransaction.outputs) {
                     tempUTXOs.put(output.id, output);
                 }
 
