@@ -9,7 +9,7 @@ public class TCWallet {
     public PrivateKey privateKey;
     public PublicKey publicKey;
 
-    public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public HashMap<String,Transactionoutput> UTXOs = new HashMap<String,Transactionoutput>();
 
     public TCWallet() {
         generateKeyPair();
@@ -37,8 +37,8 @@ public class TCWallet {
 
     public float getBalance() {
         float total = 0;
-        for (Map.Entry<String, TransactionOutput> item: NVP_Chain.UTXOs.entrySet()){
-            TransactionOutput UTXO = item.getValue();
+        for (Map.Entry<String, Transactionoutput> item: NVP_Chain.UTXOs.entrySet()){
+            Transactionoutput UTXO = item.getValue();
             if(UTXO.isMine(publicKey)) {
                 UTXOs.put(UTXO.id,UTXO);
                 total += UTXO.value ;
@@ -52,21 +52,21 @@ public class TCWallet {
             System.out.println("#Tài khoản không đủ để chuyển tiền, giao dịch bị hủy!");
             return null;
         }
-        ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
+        ArrayList<Transactioninput> inputs = new ArrayList<Transactioninput>();
 
         float total = 0;
-        for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
-            TransactionOutput UTXO = item.getValue();
+        for (Map.Entry<String, Transactionoutput> item: UTXOs.entrySet()){
+            Transactionoutput UTXO = item.getValue();
             total += UTXO.value;
-            inputs.add(new TransactionInput(UTXO.id));
+            inputs.add(new Transactioninput(UTXO.id));
             if(total > value) break;
         }
 
         Transaction newTransaction = new Transaction(publicKey, _recipient , value, inputs);
         newTransaction.generateSignature(privateKey);
 
-        for(TransactionInput input: inputs){
-            UTXOs.remove(input.transactionOutputId);
+        for(Transactioninput input: inputs){
+            UTXOs.remove(input.transactionoutputId);
         }
 
         return newTransaction;
