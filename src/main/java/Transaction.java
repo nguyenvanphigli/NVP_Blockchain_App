@@ -10,13 +10,13 @@ public class Transaction {
     public float value; //Biến lưu số tiền.
     public byte[] signature; //Biến lưu Chữ ký số.
 
-    public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
-    public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
+    public ArrayList<Transactioninput> inputs = new ArrayList<Transactioninput>();
+    public ArrayList<Transactionoutput> outputs = new ArrayList<Transactionoutput>();
 
     private static int sequence = 0; //Biến đếm số lượng giao dịch tạo ra
 
     // Constructor:
-    public Transaction(PublicKey from, PublicKey to, float value,  ArrayList<TransactionInput> inputs) {
+    public Transaction(PublicKey from, PublicKey to, float value,  ArrayList<Transactioninput> inputs) {
         this.sender = from;
         this.reciepient = to;
         this.value = value;
@@ -31,8 +31,8 @@ public class Transaction {
         }
 
         //Thu thập các đầu vào cùa giao dịch chưa được thực thi
-        for(TransactionInput i : inputs) {
-            i.UTXO = NVP_Chain.UTXOs.get(i.transactionOutputId);
+        for(Transactioninput i : inputs) {
+            i.UTXO = NVP_Chain.UTXOs.get(i.transactionoutputId);
         }
 
         //Kiểm tra giao dịch hợp lệ
@@ -49,7 +49,7 @@ public class Transaction {
         outputs.add(new TransactionOutput( this.sender, leftOver,transactionId)); //Gửi giá trị còn lại về người gửi
 
         //Đưa giao dịch vào UTXO
-        for(TransactionOutput o : outputs) {
+        for(Transactionoutput o : outputs) {
             NVP_Chain.UTXOs.put(o.id , o);
         }
 
