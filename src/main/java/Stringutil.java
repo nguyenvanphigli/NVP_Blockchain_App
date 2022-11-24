@@ -4,7 +4,7 @@ import java.util.Base64;
 import com.google.gson.GsonBuilder;
 import java.util.List;
 
-public class StringUtil {
+public class Stringutil {
 
     //Áp dụng thuật toán Sha256 để tạo mã băm.
     public static String applySha256(String input){
